@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Kotlin Quiz AI</string>
+    <string name="general_error">Ooops! Something unexpected happened, please try again later.</string>
+    <string name="toolbar_title">Kotlin Quiz AI</string>
+    <string name="error_starting_quiz">Oops! We couldn\'t start the quiz, please try again!</string>
+    <string name="skip">Skip</string>
+    <string name="you_did_not_select_an_answer">You did not select an answer.</string>
+    <string name="you_nailed_it">You nailed it!</string>
+    <string name="you_are_getting_there">You are getting there!</string>
+    <string name="not_this_time">Not this time...</string>
+    <string name="start_over">Start Over</string>
+    <string name="basic">Basic</string>
+    <string name="intermediate">Intermediate</string>
+    <string name="advanced">Advanced</string>
+    <string name="choose_your_difficulty_level">Choose your difficulty level</string>
+</resources>
