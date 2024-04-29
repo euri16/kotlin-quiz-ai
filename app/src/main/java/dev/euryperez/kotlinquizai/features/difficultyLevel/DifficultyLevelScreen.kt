@@ -15,8 +15,7 @@ import androidx.navigation.NavController
 import dev.euryperez.kotlinquizai.R
 import dev.euryperez.kotlinquizai.models.DifficultyLevel
 import dev.euryperez.kotlinquizai.ui.theme.KotlinQuizAITheme
-import dev.euryperez.kotlinquizai.ui.theme.buttons.PrimaryButton
-import dev.euryperez.kotlinquizai.utils.AppNavigation
+import dev.euryperez.kotlinquizai.ui.buttons.PrimaryButton
 import dev.euryperez.kotlinquizai.utils.AppNavigation.QuizGameDestination
 import dev.euryperez.kotlinquizai.utils.compositionLocals.LocalNavController
 
