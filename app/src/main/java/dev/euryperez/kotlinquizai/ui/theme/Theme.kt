@@ -44,32 +44,6 @@ private val DarkColorScheme = darkColorScheme(
     onSurface = Color.White,
 )
 
-/*private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFF007BFF),
-    secondary = Color(0xFF455A64),
-    tertiary = Color(0xFFFFEB3B),
-    background = Color(0xFF212121),
-    surface = Color(0xFF424242),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.Black,
-    onBackground = Color.White,
-    onSurface = Color.White,
-)
-
-private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFF3F51B5),
-    secondary = Color(0xFFE0F2F1),
-    tertiary = Color(0xFFF59E0B),
-    background = Color.White,
-    surface = Color(0xFFF0F0F0),
-    onPrimary = Color.Black,
-    onSecondary = Color.Black,
-    onTertiary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-)*/
-
 @Composable
 fun KotlinQuizAITheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

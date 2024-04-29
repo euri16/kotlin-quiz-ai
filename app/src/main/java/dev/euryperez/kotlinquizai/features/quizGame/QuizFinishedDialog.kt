@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,7 +16,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -40,7 +38,7 @@ import dev.euryperez.kotlinquizai.features.quizGame.QuizGameViewModel.GameState
 import dev.euryperez.kotlinquizai.models.Answer
 import dev.euryperez.kotlinquizai.models.Question
 import dev.euryperez.kotlinquizai.ui.theme.KotlinQuizAITheme
-import dev.euryperez.kotlinquizai.ui.theme.buttons.PrimaryButton
+import dev.euryperez.kotlinquizai.ui.buttons.PrimaryButton
 
 @Composable
 fun QuizFinishedDialog(
@@ -75,7 +73,7 @@ private fun QuizFinishedDialogContent(
     Column(modifier = modifier) {
         LazyColumn(
             modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(horizontal = 24.dp, vertical = 48.dp),
+            contentPadding = PaddingValues(horizontal = 24.dp, vertical = 32.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

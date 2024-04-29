@@ -54,7 +54,7 @@ import dev.euryperez.kotlinquizai.models.Question
 import dev.euryperez.kotlinquizai.features.quizGame.QuizGameViewModel.ViewEvent
 import dev.euryperez.kotlinquizai.ui.theme.green
 import dev.euryperez.kotlinquizai.ui.theme.KotlinQuizAITheme
-import dev.euryperez.kotlinquizai.ui.theme.buttons.PrimaryButton
+import dev.euryperez.kotlinquizai.ui.buttons.PrimaryButton
 import dev.euryperez.kotlinquizai.utils.compositionLocals.LocalNavController
 import dev.euryperez.kotlinquizai.utils.compositionLocals.LocalSnackBarHostState
 import kotlinx.coroutines.delay
@@ -277,8 +277,8 @@ private fun CountdownIndicator(
             .height(5.dp)
     )
 
-    LaunchedEffect(timeLeft) {
-        if (isCountdownPaused.not()) {
+    if (isCountdownPaused.not()) {
+        LaunchedEffect(timeLeft) {
             delay(1000)
             if (timeLeft == 1) onCountdownFinished() else tick()
         }
