@@ -8,11 +8,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,13 +30,10 @@ import dev.euryperez.kotlinquizai.utils.compositionLocals.LocalNavController
 import dev.euryperez.kotlinquizai.utils.compositionLocals.LocalSnackBarHostState
 
 @Composable
-fun KotlinQuizApp(
-    snackBarHostState: SnackbarHostState,
-    modifier: Modifier = Modifier
-) {
+fun KotlinQuizApp(modifier: Modifier = Modifier) {
     Scaffold(
         modifier = modifier,
-        snackbarHost = { SnackbarHost(snackBarHostState) },
+        snackbarHost = { SnackbarHost(LocalSnackBarHostState.current) },
         topBar = {
             @OptIn(ExperimentalMaterial3Api::class)
             TopAppBar(
@@ -59,11 +54,11 @@ private fun AppNavHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = AppNavigation.DifficultyLevelDestination.route
+        startDestination = AppNavigation.DifficultyLevelDestination.navRoute.route
     ) {
-        composable(AppNavigation.DifficultyLevelDestination.route) { DifficultyLevelScreen() }
+        composable(AppNavigation.DifficultyLevelDestination.navRoute.route) { DifficultyLevelScreen() }
 
-        composable(AppNavigation.QuizGameDestination.route) { QuizGameScreen() }
+        composable(AppNavigation.QuizGameDestination.navRoute.route) { QuizGameScreen() }
     }
 }
 

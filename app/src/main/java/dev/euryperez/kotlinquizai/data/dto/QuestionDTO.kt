@@ -15,9 +15,6 @@ data class QuestionDTO(
     val explanation: String
 )
 
-@Serializable
-data class AnswerDTO(val id: String, val text: String)
-
 fun QuestionDTO.toModel() = Question(
     id,
     question,
