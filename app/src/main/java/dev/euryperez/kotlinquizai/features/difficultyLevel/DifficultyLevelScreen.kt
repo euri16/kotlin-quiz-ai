@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -17,7 +18,10 @@ import dev.euryperez.kotlinquizai.models.DifficultyLevel
 import dev.euryperez.kotlinquizai.ui.theme.KotlinQuizAITheme
 import dev.euryperez.kotlinquizai.ui.buttons.PrimaryButton
 import dev.euryperez.kotlinquizai.utils.AppNavigation.QuizGameDestination
+import dev.euryperez.kotlinquizai.utils.NavRoute
 import dev.euryperez.kotlinquizai.utils.compositionLocals.LocalNavController
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun DifficultyLevelScreen(
@@ -26,13 +30,13 @@ fun DifficultyLevelScreen(
 ) {
     DifficultyLevelContent(
         modifier = modifier,
-        onNavigate = navController::navigate
+        onNavigate = { navController.navigate(it.route) }
     )
 }
 
 @Composable
 private fun DifficultyLevelContent(
-    onNavigate: (String) -> Unit,
+    onNavigate: (NavRoute) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -45,7 +49,7 @@ private fun DifficultyLevelContent(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.basic),
             onClick = {
-                onNavigate(QuizGameDestination.getRouteWithArgs(DifficultyLevel.BASIC))
+                onNavigate(QuizGameDestination.getNavRoute(DifficultyLevel.BASIC))
             }
         )
 
@@ -53,7 +57,7 @@ private fun DifficultyLevelContent(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.intermediate),
             onClick = {
-                onNavigate(QuizGameDestination.getRouteWithArgs(DifficultyLevel.MEDIUM))
+                onNavigate(QuizGameDestination.getNavRoute(DifficultyLevel.MEDIUM))
             }
         )
 
@@ -61,7 +65,7 @@ private fun DifficultyLevelContent(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.advanced),
             onClick = {
-                onNavigate(QuizGameDestination.getRouteWithArgs(DifficultyLevel.ADVANCED))
+                onNavigate(QuizGameDestination.getNavRoute(DifficultyLevel.ADVANCED))
             }
         )
     }

@@ -1,5 +1,6 @@
 package dev.euryperez.kotlinquizai.data
 
+import android.util.Log
 import androidx.annotation.IntRange
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.GenerateContentResponse
@@ -55,17 +56,17 @@ class QuizRepository @Inject constructor(
         return try {
             withContext(dispatcherProvider.default) {
                 getGeminiResponse(difficultyLevel, numberOfQuestions, useModelTraining)
-                    .takeIf { it.isSuccess }
-                    ?.getOrNull()
-                    ?.text
-                    ?.replace("```json", "")
-                    ?.replace("```", "")
-                    ?.also { println(it) }
-                    ?.let { json.decodeFromString<List<QuestionDTO>>(it) }
-                    ?.map(QuestionDTO::toModel)
-                    ?.let(::Quiz)
-                    ?.let { NetworkResponse.Success(it) }
-                    ?: NetworkResponse.Error(throwable = Throwable("response is null"))
+                    .takeIf { it.isSuccess } // 1
+                    ?.getOrNull() // 2
+                    ?.text // 3
+                    ?.replace("```json", "") // 4
+                    ?.replace("```", "") // 5
+                    ?.also { Log.d("QuizRepository", it) } // 6
+                    ?.let { json.decodeFromString<List<QuestionDTO>>(it) } // 7
+                    ?.map(QuestionDTO::toModel) // 8
+                    ?.let(::Quiz) // 9
+                    ?.let { NetworkResponse.Success(it) } // 10
+                    ?: NetworkResponse.Error(throwable = Throwable("response is null")) // 11
             }
         } catch (ex: SerializationException) {
             NetworkResponse.Error(ex)
@@ -74,6 +75,13 @@ class QuizRepository @Inject constructor(
         }
     }
 
+    /**
+     * Generates a list of random single-choice quiz questions at a specified difficulty level.
+     *
+     * @param difficultyLevel the difficulty level of the questions to generate
+     * @param numberOfQuestions the number of questions to generate
+     * @param useModelTraining whether to include a sample prompt for model training
+     */
     private suspend fun getGeminiResponse(
         difficultyLevel: DifficultyLevel,
         @IntRange(from = 1, to = 10) numberOfQuestions: Int,
@@ -83,17 +91,20 @@ class QuizRepository @Inject constructor(
             runCatching {
                 model.generateContent(
                     content {
+                        // 1
                         buildPrompt(difficultyLevel, numberOfQuestions).also { text(it) }
 
                         if (useModelTraining) {
+                            // 2
                             text(difficultyLevel.getSamplePrompt())
                             text("Give me $numberOfQuestions more random questions.")
+                        } else {
+                            // 3
+                            text("output: ")
                         }
-
-                        text("output: ")
                     }
                 )
-            }.also { println(it) }
+            }
         }
     }
 

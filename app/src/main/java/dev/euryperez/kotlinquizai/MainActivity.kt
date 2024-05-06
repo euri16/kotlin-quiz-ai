@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     LocalSnackBarHostState provides snackBarHostState,
                     LocalNavController provides rememberNavController()
                 ) {
-                    KotlinQuizApp(snackBarHostState)
+                    KotlinQuizApp()
                 }
             }
         }

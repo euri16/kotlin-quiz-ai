@@ -3,18 +3,21 @@ package dev.euryperez.kotlinquizai.utils
 import dev.euryperez.kotlinquizai.models.DifficultyLevel
 
 sealed interface AppNavigation {
-    val route: String
+    val navRoute: NavRoute
 
     data object DifficultyLevelDestination : AppNavigation {
-        override val route: String = "difficultyScreen"
+        override val navRoute: NavRoute = NavRoute("difficultyScreen")
     }
 
     data object QuizGameDestination : AppNavigation {
         const val DIFFICULTY_LEVEL_ARG = "difficultyLevel"
 
-        override val route = "quizGameScreen/{$DIFFICULTY_LEVEL_ARG}"
+        override val navRoute = NavRoute("quizGameScreen/{$DIFFICULTY_LEVEL_ARG}")
 
-        fun getRouteWithArgs(difficultyLevelType: DifficultyLevel) =
-            "quizGameScreen/${difficultyLevelType.name}"
+        fun getNavRoute(difficultyLevelType: DifficultyLevel) =
+            NavRoute("quizGameScreen/${difficultyLevelType.name}")
     }
 }
+
+@JvmInline
+value class NavRoute(val route: String)

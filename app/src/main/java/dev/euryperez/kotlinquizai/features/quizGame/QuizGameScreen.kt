@@ -115,8 +115,8 @@ private fun QuizGameScreen(
             slideInVertically(initialOffsetY = { it })
                 .togetherWith(slideOutVertically(targetOffsetY = { -it }) + fadeOut())
         }
-    ) {
-        if (it) {
+    ) { loading ->
+        if (loading) {
             Box(modifier = Modifier.fillMaxSize()) {
                 CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
             }
@@ -148,17 +148,17 @@ private fun QuestionContainer(
     modifier: Modifier = Modifier,
     selectedAnswerId: String? = null,
 ) {
-    var timeLeft by remember { mutableIntStateOf(TIMER_SECONDS) }
+    var secondsLeft by remember { mutableIntStateOf(TIMER_SECONDS) }
 
-    LaunchedEffect(question) { timeLeft = TIMER_SECONDS }
+    LaunchedEffect(question) { secondsLeft = TIMER_SECONDS }
 
     Column(modifier = modifier) {
         CountdownIndicator(
-            timeLeft = timeLeft,
+            secondsLeft = secondsLeft,
             isCountdownPaused = selectedAnswerId != null,
-            tick = { timeLeft-- },
+            tick = { secondsLeft-- },
             onCountdownFinished = {
-                onEvent(ViewEvent.NextQuestion).also { timeLeft = TIMER_SECONDS }
+                onEvent(ViewEvent.NextQuestion).also { secondsLeft = TIMER_SECONDS }
             }
         )
 
@@ -258,14 +258,14 @@ private fun AnswerItem(
 
 @Composable
 private fun CountdownIndicator(
-    modifier: Modifier = Modifier,
-    timeLeft: Int,
-    isCountdownPaused: Boolean = false,
+    secondsLeft: Int,
     tick: () -> Unit,
+    modifier: Modifier = Modifier,
+    isCountdownPaused: Boolean = false,
     onCountdownFinished: () -> Unit
 ) {
-    val progressDecimal by remember(timeLeft) {
-        mutableFloatStateOf(timeLeft / TIMER_SECONDS.toFloat())
+    val progressDecimal by remember(secondsLeft) {
+        mutableFloatStateOf(secondsLeft / TIMER_SECONDS.toFloat())
     }
 
     val progress by animateFloatAsState(targetValue = progressDecimal, label = "")
@@ -278,9 +278,9 @@ private fun CountdownIndicator(
     )
 
     if (isCountdownPaused.not()) {
-        LaunchedEffect(timeLeft) {
+        LaunchedEffect(secondsLeft) {
             delay(1000)
-            if (timeLeft == 1) onCountdownFinished() else tick()
+            if (secondsLeft == 1) onCountdownFinished() else tick()
         }
     }
 }
