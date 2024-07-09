@@ -10,14 +10,11 @@ interface DispatcherProvider {
 }
 
 class DispatcherProviderImpl : DispatcherProvider {
-    override val io
-        get() = Dispatchers.IO
+    override val io = Dispatchers.IO
 
-    override val main
-        get() = Dispatchers.Main
+    override val main = Dispatchers.Main
 
-    override val default
-        get() = Dispatchers.Default
+    override val default = Dispatchers.Default
 }
 
 /*class TestDispatcherProvider : DispatcherProvider {

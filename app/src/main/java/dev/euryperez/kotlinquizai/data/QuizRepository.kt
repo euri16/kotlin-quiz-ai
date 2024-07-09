@@ -56,17 +56,17 @@ class QuizRepository @Inject constructor(
         return try {
             withContext(dispatcherProvider.default) {
                 getGeminiResponse(difficultyLevel, numberOfQuestions, useModelTraining)
-                    .takeIf { it.isSuccess } // 1
-                    ?.getOrNull() // 2
-                    ?.text // 3
-                    ?.replace("```json", "") // 4
-                    ?.replace("```", "") // 5
-                    ?.also { Log.d("QuizRepository", it) } // 6
-                    ?.let { json.decodeFromString<List<QuestionDTO>>(it) } // 7
-                    ?.map(QuestionDTO::toModel) // 8
-                    ?.let(::Quiz) // 9
-                    ?.let { NetworkResponse.Success(it) } // 10
-                    ?: NetworkResponse.Error(throwable = Throwable("response is null")) // 11
+                    .takeIf { it.isSuccess }
+                    ?.getOrNull()
+                    ?.text
+                    ?.replace("```json", "")
+                    ?.replace("```", "")
+                    ?.also { Log.d("QuizRepository", it) }
+                    ?.let { json.decodeFromString<List<QuestionDTO>>(it) }
+                    ?.map(QuestionDTO::toModel)
+                    ?.let(::Quiz)
+                    ?.let { NetworkResponse.Success(it) }
+                    ?: NetworkResponse.Error(throwable = Throwable("response is null"))
             }
         } catch (ex: SerializationException) {
             NetworkResponse.Error(ex)
@@ -91,15 +91,12 @@ class QuizRepository @Inject constructor(
             runCatching {
                 model.generateContent(
                     content {
-                        // 1
                         buildPrompt(difficultyLevel, numberOfQuestions).also { text(it) }
 
                         if (useModelTraining) {
-                            // 2
                             text(difficultyLevel.getSamplePrompt())
                             text("Give me $numberOfQuestions more random questions.")
                         } else {
-                            // 3
                             text("output: ")
                         }
                     }
