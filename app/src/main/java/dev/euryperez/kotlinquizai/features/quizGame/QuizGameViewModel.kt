@@ -58,7 +58,7 @@ class QuizGameViewModel @Inject constructor(
                             _viewStateFlow.update { viewState ->
                                 viewState.copy(
                                     isLoading = false,
-                                    gameState = GameState.InProgress(selectedQuestion = questions.first())
+                                    gameState = GameStatus.InProgress(selectedQuestion = questions.first())
                                 )
                             }
                         }
@@ -81,7 +81,7 @@ class QuizGameViewModel @Inject constructor(
                     it.copy(gameState = it.gameState.copy(selectedAnswerId = event.answer.id))
                 }
 
-                (viewStateFlow.value.gameState as GameState.InProgress)
+                (viewStateFlow.value.gameState as GameStatus.InProgress)
                     .selectedQuestion
                     .also { answersMap[it.id] = event.answer }
 
@@ -112,7 +112,7 @@ class QuizGameViewModel @Inject constructor(
 
                         _viewStateFlow.update {
                             it.copy(
-                                gameState = GameState.Finished(
+                                gameState = GameStatus.Finished(
                                     allResponses,
                                     totalCorrectAnswers,
                                     scorePercentage
@@ -123,14 +123,14 @@ class QuizGameViewModel @Inject constructor(
             }
         } else {
             _viewStateFlow.update {
-                it.copy(gameState = GameState.InProgress(selectedQuestion = questions[selectedQuestionIndex]))
+                it.copy(gameState = GameStatus.InProgress(selectedQuestion = questions[selectedQuestionIndex]))
             }
         }
     }
 
     data class ViewState(
         val isLoading: Boolean = true,
-        val gameState: GameState = GameState.InProgress(),
+        val gameState: GameStatus = GameStatus.InProgress(),
         val viewEffect: ViewEffect? = null
     )
 
@@ -145,19 +145,19 @@ class QuizGameViewModel @Inject constructor(
         data object ConsumeEffect : ViewEvent
     }
 
-    sealed interface GameState {
+    sealed interface GameStatus {
         data class InProgress(
             val selectedQuestion: Question = Question.empty,
             val selectedAnswerId: String? = null
-        ) : GameState
+        ) : GameStatus
 
         data class Finished(
             val responses: List<Question> = emptyList(),
             val totalCorrectAnswers: Int = 0,
             val scorePercentage: Int = 0
-        ) : GameState
+        ) : GameStatus
 
-        fun copy(selectedQuestion: Question? = null, selectedAnswerId: String? = null): GameState {
+        fun copy(selectedQuestion: Question? = null, selectedAnswerId: String? = null): GameStatus {
             return when (this) {
                 is InProgress -> copy(
                     selectedQuestion = selectedQuestion ?: this.selectedQuestion,

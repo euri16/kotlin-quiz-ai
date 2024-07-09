@@ -47,7 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import dev.euryperez.kotlinquizai.R
-import dev.euryperez.kotlinquizai.features.quizGame.QuizGameViewModel.GameState
+import dev.euryperez.kotlinquizai.features.quizGame.QuizGameViewModel.GameStatus
 import dev.euryperez.kotlinquizai.features.quizGame.QuizGameViewModel.ViewEffect
 import dev.euryperez.kotlinquizai.models.Answer
 import dev.euryperez.kotlinquizai.models.Question
@@ -69,10 +69,10 @@ fun QuizGameScreen(
     val state by viewModel.viewStateFlow.collectAsState()
 
     when (val gameState = state.gameState) {
-        is GameState.Finished ->
+        is GameStatus.Finished ->
             QuizFinishedDialog(gameState = gameState, onDismiss = navController::popBackStack)
 
-        is GameState.InProgress ->
+        is GameStatus.InProgress ->
             QuizGameScreen(
                 gameState = gameState,
                 isLoading = state.isLoading,
@@ -103,7 +103,7 @@ fun QuizGameScreen(
 
 @Composable
 private fun QuizGameScreen(
-    gameState: GameState.InProgress,
+    gameState: GameStatus.InProgress,
     isLoading: Boolean,
     onEvent: (ViewEvent) -> Unit,
     modifier: Modifier = Modifier
@@ -295,7 +295,7 @@ fun PreviewQuizGameScreen() {
         ) {
             QuizGameScreen(
                 modifier = Modifier.padding(it),
-                gameState = GameState.InProgress(
+                gameState = GameStatus.InProgress(
                     selectedQuestion = Question(
                         id = "1",
                         question = "What is the capital of France?",

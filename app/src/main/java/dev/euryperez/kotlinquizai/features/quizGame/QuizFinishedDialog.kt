@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import dev.euryperez.kotlinquizai.R
-import dev.euryperez.kotlinquizai.features.quizGame.QuizGameViewModel.GameState
+import dev.euryperez.kotlinquizai.features.quizGame.QuizGameViewModel.GameStatus
 import dev.euryperez.kotlinquizai.models.Answer
 import dev.euryperez.kotlinquizai.models.Question
 import dev.euryperez.kotlinquizai.ui.theme.KotlinQuizAITheme
@@ -42,7 +42,7 @@ import dev.euryperez.kotlinquizai.ui.buttons.PrimaryButton
 
 @Composable
 fun QuizFinishedDialog(
-    gameState: GameState.Finished,
+    gameState: GameStatus.Finished,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -62,7 +62,7 @@ fun QuizFinishedDialog(
 
 @Composable
 private fun QuizFinishedDialogContent(
-    gameState: GameState.Finished,
+    gameState: GameStatus.Finished,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -251,7 +251,7 @@ private fun QuizFinishedDialogPreview() {
     KotlinQuizAITheme(dynamicColor = false) {
         QuizFinishedDialog(
             onDismiss = {},
-            gameState = GameState.Finished(
+            gameState = GameStatus.Finished(
                 responses = listOf(
                     Question(
                         id = "1",

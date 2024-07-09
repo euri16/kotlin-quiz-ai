@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -20,8 +19,6 @@ import dev.euryperez.kotlinquizai.ui.buttons.PrimaryButton
 import dev.euryperez.kotlinquizai.utils.AppNavigation.QuizGameDestination
 import dev.euryperez.kotlinquizai.utils.NavRoute
 import dev.euryperez.kotlinquizai.utils.compositionLocals.LocalNavController
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Composable
 fun DifficultyLevelScreen(

@@ -22,7 +22,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import dev.euryperez.kotlinquizai.features.difficultyLevel.DifficultyLevelScreen
 import dev.euryperez.kotlinquizai.features.quizGame.QuizGameScreen
 import dev.euryperez.kotlinquizai.utils.AppNavigation
