@@ -5,16 +5,18 @@ plugins {
     alias(libs.plugins.gradle.secrets)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.google.services)
 }
 
 android {
     namespace = "dev.euryperez.kotlinquizai"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "dev.euryperez.kotlinquizai"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -79,6 +81,10 @@ dependencies {
     ksp(libs.hilt.android.compiler)
 
     implementation(libs.androidx.hilt.navigation.compose)
+
+    // firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.vertexai)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

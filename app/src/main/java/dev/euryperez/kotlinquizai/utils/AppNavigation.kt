@@ -2,6 +2,7 @@ package dev.euryperez.kotlinquizai.utils
 
 import dev.euryperez.kotlinquizai.models.DifficultyLevel
 
+@Deprecated("Use Navigation Compose Typed Navigation")
 sealed interface AppNavigation {
     val navRoute: NavRoute
 

@@ -1,25 +1,26 @@
 [versions]
-agp = "8.3.2"
+agp = "8.7.2"
 generativeai = "0.9.0"
-hilt = "2.51.1"
+google-services = "4.4.2"
+firebase-bom = "33.6.0"
+hilt = "2.52"
 hiltNavigationCompose = "1.2.0"
-kotlin = "1.9.23"
-kspPluginVersion = "1.9.23-1.0.20"
-coreKtx = "1.13.1"
+kotlin = "2.0.21"
+kspPluginVersion = "2.0.21-1.0.28"
+coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 kotlinx-serialization = "1.6.3"
 espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.8.3"
-activityCompose = "1.9.0"
-composeBom = "2024.06.00"
+lifecycleRuntimeKtx = "2.8.7"
+activityCompose = "1.9.3"
+composeBom = "2024.11.00"
 secretsGradlePlugin = "2.0.1"
-navigationCompose = "2.7.7"
+navigationCompose = "2.8.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
-google-generativeai = { module = "com.google.ai.client.generativeai:generativeai", version.ref = "generativeai" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -37,6 +38,11 @@ androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose"}
 
+google-generativeai = { module = "com.google.ai.client.generativeai:generativeai", version.ref = "generativeai" }
+
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
+firebase-vertexai = { group = "com.google.firebase", name = "firebase-vertexai" }
+
 kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" , version.ref = "kotlinx-serialization" }
 gradle-secrets = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
 
@@ -47,5 +53,7 @@ kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", vers
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspPluginVersion" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 gradle-secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 
 

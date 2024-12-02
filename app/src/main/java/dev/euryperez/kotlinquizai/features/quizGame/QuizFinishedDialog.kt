@@ -77,14 +77,14 @@ private fun QuizFinishedDialogContent(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item(key = scorePercentage) {
+            item {
                 ScoreImage(
                     modifier = Modifier.padding(bottom = 16.dp),
                     scorePercentage = scorePercentage
                 )
             }
 
-            item(totalCorrectAnswers, responses) {
+            item {
                 ResultText(
                     modifier = Modifier.padding(bottom = 16.dp),
                     scorePercentage = scorePercentage,

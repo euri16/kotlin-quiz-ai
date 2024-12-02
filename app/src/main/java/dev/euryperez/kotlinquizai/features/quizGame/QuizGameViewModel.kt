@@ -13,6 +13,7 @@ import dev.euryperez.kotlinquizai.models.Answer
 import dev.euryperez.kotlinquizai.models.DifficultyLevel
 import dev.euryperez.kotlinquizai.models.Question
 import dev.euryperez.kotlinquizai.utils.AppNavigation
+import dev.euryperez.kotlinquizai.utils.DispatcherProvider
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,11 +21,13 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class QuizGameViewModel @Inject constructor(
     private val quizRepository: QuizRepository,
+    private val dispatcherProvider: DispatcherProvider,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -40,7 +43,10 @@ class QuizGameViewModel @Inject constructor(
             ?.runCatching { DifficultyLevel.valueOf(this) }
             ?.onSuccess { difficultyLevel ->
                 viewModelScope.launch {
-                    quizRepository.generateQuiz(difficultyLevel = difficultyLevel)
+                    quizRepository.generateQuiz(
+                        difficultyLevel = difficultyLevel,
+                        numberOfQuestions = QUESTIONS_AMOUNT
+                    )
                 }
             }
             ?.onFailure {
@@ -81,12 +87,15 @@ class QuizGameViewModel @Inject constructor(
                     it.copy(gameState = it.gameState.copy(selectedAnswerId = event.answer.id))
                 }
 
-                (viewStateFlow.value.gameState as GameStatus.InProgress)
-                    .selectedQuestion
-                    .also { answersMap[it.id] = event.answer }
-
                 viewModelScope.launch {
-                    delay(5000)
+                    withContext(dispatcherProvider.default) {
+                        (viewStateFlow.value.gameState as GameStatus.InProgress)
+                            .selectedQuestion
+                            .also { answersMap[it.id] = event.answer }
+                    }
+
+                    delay(3000)
+
                     showNextQuestionOrFinish()
                 }
             }
@@ -103,12 +112,15 @@ class QuizGameViewModel @Inject constructor(
             viewModelScope.launch {
                 questions.map { it.copy(options = listOfNotNull(answersMap[it.id])) }
                     .also { allResponses ->
-                        val totalCorrectAnswers = allResponses.count { question ->
-                            question.options.firstOrNull()?.isCorrectAnswer == true
+                        val totalCorrectAnswers = withContext(dispatcherProvider.default) {
+                            allResponses.count { question ->
+                                question.options.firstOrNull()?.isCorrectAnswer == true
+                            }
                         }
 
-                        val scorePercentage =
+                        val scorePercentage = withContext(dispatcherProvider.default) {
                             ((totalCorrectAnswers / allResponses.size.toFloat()) * 100).toInt()
+                        }
 
                         _viewStateFlow.update {
                             it.copy(
@@ -126,6 +138,10 @@ class QuizGameViewModel @Inject constructor(
                 it.copy(gameState = GameStatus.InProgress(selectedQuestion = questions[selectedQuestionIndex]))
             }
         }
+    }
+
+    companion object {
+        private const val QUESTIONS_AMOUNT = 10
     }
 
     data class ViewState(
