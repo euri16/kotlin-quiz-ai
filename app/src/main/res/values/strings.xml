@@ -12,5 +12,5 @@
     <string name="basic">Basic</string>
     <string name="intermediate">Intermediate</string>
     <string name="advanced">Advanced</string>
-    <string name="choose_your_difficulty_level">Choose your difficulty level</string>
+    <string name="choose_your_difficulty_level">Choose the difficulty level</string>
 </resources>

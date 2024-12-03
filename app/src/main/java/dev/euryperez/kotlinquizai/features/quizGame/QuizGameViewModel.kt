@@ -12,7 +12,6 @@ import dev.euryperez.kotlinquizai.data.common.NetworkResponse
 import dev.euryperez.kotlinquizai.models.Answer
 import dev.euryperez.kotlinquizai.models.DifficultyLevel
 import dev.euryperez.kotlinquizai.models.Question
-import dev.euryperez.kotlinquizai.utils.AppNavigation
 import dev.euryperez.kotlinquizai.utils.DispatcherProvider
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,18 +38,14 @@ class QuizGameViewModel @Inject constructor(
     private var selectedQuestionIndex = 0
 
     init {
-        savedStateHandle.get<String>(AppNavigation.QuizGameDestination.DIFFICULTY_LEVEL_ARG)
-            ?.runCatching { DifficultyLevel.valueOf(this) }
-            ?.onSuccess { difficultyLevel ->
+        savedStateHandle.get<DifficultyLevel>("difficultyLevel")
+            ?.let { difficultyLevel ->
                 viewModelScope.launch {
                     quizRepository.generateQuiz(
                         difficultyLevel = difficultyLevel,
                         numberOfQuestions = QUESTIONS_AMOUNT
                     )
                 }
-            }
-            ?.onFailure {
-                _viewStateFlow.update { it.copy(viewEffect = ViewEffect.ErrorGettingDifficultyLevel) }
             }
             ?: _viewStateFlow.update { it.copy(viewEffect = ViewEffect.ErrorGettingDifficultyLevel) }
 

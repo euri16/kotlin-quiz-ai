@@ -5,6 +5,7 @@ import androidx.annotation.IntRange
 import com.google.firebase.vertexai.GenerativeModel
 import com.google.firebase.vertexai.type.GenerateContentResponse
 import dev.euryperez.kotlinquizai.data.common.NetworkResponse
+import dev.euryperez.kotlinquizai.data.common.NetworkResponse.Success
 import dev.euryperez.kotlinquizai.data.dto.QuestionDTO
 import dev.euryperez.kotlinquizai.data.dto.toModel
 import dev.euryperez.kotlinquizai.models.DifficultyLevel
@@ -29,13 +30,12 @@ class QuizVertexAiDataSource @Inject constructor(
                 getGeminiResponse(difficultyLevel, numberOfQuestions)
                     .onSuccess { Log.d("vertex-ai", it.toString()) }
                     .onFailure { Log.e("vertex-ai", it.toString()) }
-                    .takeIf { it.isSuccess }
-                    ?.getOrNull()
+                    .getOrNull()
                     ?.text
                     ?.let { json.decodeFromString<List<QuestionDTO>>(it) }
                     ?.map(QuestionDTO::toModel)
                     ?.let(::Quiz)
-                    ?.let { NetworkResponse.Success(it) }
+                    ?.let(::Success)
                     ?: NetworkResponse.Error(throwable = Throwable("response is null"))
             }
         }.getOrElse {
@@ -61,8 +61,10 @@ class QuizVertexAiDataSource @Inject constructor(
     }
 
     private fun buildPrompt(difficulty: DifficultyLevel, numberOfQuestions: Int) = """
-        Generate a list of $numberOfQuestions random single-choice quiz questions, 
-        at a ${difficulty.displayValue} difficulty level, to evaluate the knowledge of Kotlin. 
-        Each question should have 3 answer options, only one the options should be correct.
+        Generate a list of $numberOfQuestions random 
+        single-choice quiz questions, at a ${difficulty.displayValue} 
+        difficulty level, to evaluate the knowledge of Kotlin. 
+        Each question should have 3 answer options, only one the 
+        options should be correct.
     """.trimIndent()
 }

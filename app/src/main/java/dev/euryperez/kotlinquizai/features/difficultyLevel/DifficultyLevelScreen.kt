@@ -14,10 +14,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import dev.euryperez.kotlinquizai.R
 import dev.euryperez.kotlinquizai.models.DifficultyLevel
+import dev.euryperez.kotlinquizai.navigation.KotlinQuizAppRoute
+import dev.euryperez.kotlinquizai.navigation.QuizGameRoute
 import dev.euryperez.kotlinquizai.ui.theme.KotlinQuizAITheme
 import dev.euryperez.kotlinquizai.ui.buttons.PrimaryButton
-import dev.euryperez.kotlinquizai.utils.AppNavigation.QuizGameDestination
-import dev.euryperez.kotlinquizai.utils.NavRoute
 import dev.euryperez.kotlinquizai.utils.compositionLocals.LocalNavController
 
 @Composable
@@ -25,15 +25,12 @@ fun DifficultyLevelScreen(
     modifier: Modifier = Modifier,
     navController: NavController = LocalNavController.current
 ) {
-    DifficultyLevelContent(
-        modifier = modifier,
-        onNavigate = { navController.navigate(it.route) }
-    )
+    DifficultyLevelContent(modifier = modifier, onNavigate = navController::navigate)
 }
 
 @Composable
 private fun DifficultyLevelContent(
-    onNavigate: (NavRoute) -> Unit,
+    onNavigate: (KotlinQuizAppRoute) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -45,25 +42,19 @@ private fun DifficultyLevelContent(
         PrimaryButton(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.basic),
-            onClick = {
-                onNavigate(QuizGameDestination.getNavRoute(DifficultyLevel.BASIC))
-            }
+            onClick = { onNavigate(QuizGameRoute(DifficultyLevel.BASIC)) }
         )
 
         PrimaryButton(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.intermediate),
-            onClick = {
-                onNavigate(QuizGameDestination.getNavRoute(DifficultyLevel.MEDIUM))
-            }
+            onClick = { onNavigate(QuizGameRoute(DifficultyLevel.MEDIUM)) }
         )
 
         PrimaryButton(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.advanced),
-            onClick = {
-                onNavigate(QuizGameDestination.getNavRoute(DifficultyLevel.ADVANCED))
-            }
+            onClick = { onNavigate(QuizGameRoute(DifficultyLevel.ADVANCED)) }
         )
     }
 }

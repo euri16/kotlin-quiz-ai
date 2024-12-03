@@ -17,7 +17,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
-class QuizGenerativeAiDataSource @Inject constructor(
+class QuizGenAiDataSource @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val model: GenerativeModel,
     private val json: Json

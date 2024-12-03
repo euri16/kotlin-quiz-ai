@@ -19,12 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import dev.euryperez.kotlinquizai.features.difficultyLevel.DifficultyLevelScreen
-import dev.euryperez.kotlinquizai.features.quizGame.QuizGameScreen
-import dev.euryperez.kotlinquizai.utils.AppNavigation
+import dev.euryperez.kotlinquizai.navigation.AppNavHost
 import dev.euryperez.kotlinquizai.utils.compositionLocals.LocalNavController
 import dev.euryperez.kotlinquizai.utils.compositionLocals.LocalSnackBarHostState
 
@@ -42,22 +37,6 @@ fun KotlinQuizApp(modifier: Modifier = Modifier) {
         }
     ) {
         AppNavHost(modifier = Modifier.padding(it))
-    }
-}
-
-@Composable
-private fun AppNavHost(
-    modifier: Modifier = Modifier,
-    navController: NavHostController = LocalNavController.current
-) {
-    NavHost(
-        modifier = modifier,
-        navController = navController,
-        startDestination = AppNavigation.DifficultyLevelDestination.navRoute.route
-    ) {
-        composable(AppNavigation.DifficultyLevelDestination.navRoute.route) { DifficultyLevelScreen() }
-
-        composable(AppNavigation.QuizGameDestination.navRoute.route) { QuizGameScreen() }
     }
 }
 
